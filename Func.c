@@ -1,52 +1,42 @@
 #include <stdio.h>
 #include <math.h>
 
-    int v1[1000];
+typedef struct dado
+{
+    int numero;
+    double raiz;
+}d_a;
 
-int armazenaDivisores(int *a){
-    double b;
-    if (a <= 508079)
+int PrintaQuasePrimo(int numero, double raiz)
+{
+    if (numero <= 508079)
     {
-        a = 508079;
+        printf("508079\n");
     }
-    
-    b = sqrt((double)a);
-    int c = 0;
-    for (int i = 10; i <= b; i++)
+    else
     {
-        if (a % i == 0)
+        int contador = 0;
+        if (numero % 2 != 0 && numero % 3 != 0 && numero % 5 != 0 && numero % 7 != 0)
         {
-            c++;
+            for (int i = 11; i < raiz; i++)
+            {
+                if (numero % i == 0 && i >= 10)
+                    contador++;
+            }
+            if (contador > 10 && numero)
+            {
+                printf("%d\n", numero);
+                return 0;
+            }
         }
+        PrintaQuasePrimo(numero + 1, raiz);
     }
-    return c - 1;
 }
 
-
-
 int main(void){
-    int numero1;
-
-    int c2;
-    int c3 = 0;
-    scanf("%d",&numero1);
-    for (int i = 0; i < numero1; i++)
-    {
-        scanf("%d", &v1[i]);
-        c3++;
-    }
-    
-    for (int i = 0; i < c3; i++)
-    {   
-        c2 = armazenaDivisores(v1[i]);
-        while (c2 < 10)
-        {
-            c2 = armazenaDivisores(v1[i] + 1);
-            v1[i] = v1[i] + 1;
-        }
-        printf("%d\n", v1[i]);
-    }
-    
-    
+    d_a a ;
+    scanf("%d", &a.numero);
+    a.raiz = sqrt((double)a.numero);
+    PrintaQuasePrimo(a.numero, a.raiz);
     return 0;
 }

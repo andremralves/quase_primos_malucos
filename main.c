@@ -1,3 +1,4 @@
+#include <math.h>
 #include <stdio.h>
 #include <stdbool.h>
 #include <pthread.h>
@@ -9,11 +10,37 @@ typedef struct parametro_thread {
     int result;
 } parametro_thread;
 
+int PrintaQuasePrimo(int numero, double raiz)
+{
+    if (numero <= 508079)
+    {
+        return 508079;
+    }
+    else
+    {
+        int contador = 0;
+        if (numero % 2 != 0 && numero % 3 != 0 && numero % 5 != 0 && numero % 7 != 0)
+        {
+            for (int i = 11; i < raiz; i++)
+            {
+                if (numero % i == 0 && i >= 10)
+                    contador++;
+            }
+            if (contador > 10 && numero)
+            {
+                return numero;
+            }
+        }
+        return PrintaQuasePrimo(numero + 1, raiz);
+    }
+}
+
 // CALCULA SE EH QUASE PRIMO MALUCO
 void *calcula_sequaseprimo_maluco(void *parameter) {
     parametro_thread *param = parameter;
     // TODO: Fazer calculos para descubrir se eh primo maluco
-    param->result = param->n;
+    double raiz = sqrt((double)param->n);
+    param->result = PrintaQuasePrimo(param->n, raiz);
     pthread_exit(NULL);
 }
 
